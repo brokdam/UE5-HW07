@@ -4,6 +4,8 @@
 #include "GameFramework/Pawn.h"
 #include "MyPawn.generated.h"
 
+struct FInputActionValue;
+
 UCLASS()
 class UE502_API AMyPawn : public APawn
 {
@@ -24,4 +26,11 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     class UCameraComponent* CameraComp;
+
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+    UFUNCTION()
+    void Move(const FInputActionValue& value);
+    UFUNCTION()
+    void Look(const FInputActionValue& value);
 };
