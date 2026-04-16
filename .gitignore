@@ -84,3 +84,6 @@ DerivedDataCache/*
 
 # Prerequisites
 *.d
+
+# 대용량 아트 리소스 폴더 무시
+Content/Resources/
