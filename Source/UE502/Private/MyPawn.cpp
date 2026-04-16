@@ -22,7 +22,10 @@ AMyPawn::AMyPawn()
     SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
     SpringArmComp->SetupAttachment(RootComponent);
     SpringArmComp->TargetArmLength = 300.0f;
-    SpringArmComp->bUsePawnControlRotation = true;
+    SpringArmComp->bUsePawnControlRotation = false;
+    SpringArmComp->bInheritPitch = false; 
+    SpringArmComp->bInheritYaw = false; 
+    SpringArmComp->bInheritRoll = false;
 
     CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
     CameraComp->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
@@ -71,9 +74,12 @@ void AMyPawn::Move(const FInputActionValue& value)
     float DeltaTime = GetWorld()->GetDeltaSeconds();
     float MoveSpeed = 500.0f;
 
-    FVector LocalOffset = FVector(MovementVector.Y * MoveSpeed * DeltaTime, MovementVector.X * MoveSpeed * DeltaTime, 0.0f);
+    FVector WorldOffset = FVector(
+        MovementVector.X * MoveSpeed * DeltaTime, 
+        MovementVector.Y * MoveSpeed * DeltaTime, 
+        0.0f);
 
-    AddActorLocalOffset(LocalOffset, true);
+    AddActorWorldOffset(WorldOffset, true);
 }
 
 void AMyPawn::Look(const FInputActionValue& value)
